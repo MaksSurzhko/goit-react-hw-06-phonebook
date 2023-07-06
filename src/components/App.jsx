@@ -8,7 +8,8 @@ import ContactList from "../components/contlist/list";
 import { addContact, deleteContact, setFilter } from "../components/redux/phonebookSlice";
 
 const Phonebook = () => {
-  const contacts = useSelector((state) => state);
+  const contacts = useSelector((state) => state.phonebook);
+  // const contacts = useSelector((state) => state);
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 

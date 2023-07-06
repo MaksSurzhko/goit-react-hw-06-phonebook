@@ -1,41 +1,38 @@
-// import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 // import { persistStore, persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-// import contactsReducer from './phonebookSlice';
-
-// const persistConfig = {
-//   key: 'root',
-//     storage,
-// };
-
-// const persistedReducer = persistReducer(persistConfig, contactsReducer);
-
-// export const store = configureStore({
-//   reducer: persistedReducer,
-// });
-
-// export const persistor = persistStore(store);
-
-import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import contactsReducer from "./phonebookSlice";
-import { createSerializableStateInvariantMiddleware } from "@reduxjs/toolkit";
+import storage from 'redux-persist/lib/storage';
+import contactsReducer from './phonebookSlice';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 
 const persistConfig = {
-  key: "root",
-  storage,
+  key: 'root',
+    storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, contactsReducer);
 
-const serializableMiddleware = createSerializableStateInvariantMiddleware();
-
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(serializableMiddleware),
+    reducer: persistedReducer,
+    
+middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    });
+  },
 });
 
 export const persistor = persistStore(store);
+
+
 
