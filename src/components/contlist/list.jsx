@@ -1,18 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import lcss from "../contlist/list.module.css";
-import { deleteContact } from "../redux/phonebookSlice";
+import { deleteUser } from "../redux/contactsSlice";
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, filter }) => {
   const dispatch = useDispatch();
 
   const handleDeleteContact = (contactId) => {
-    dispatch(deleteContact(contactId));
+    dispatch(deleteUser(contactId));
   };
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <ul className={lcss.llist}>
-      {contacts.map((contact) => (
+      {filteredContacts.map((contact) => (
         <li className={lcss.item} key={contact.id}>
           {contact.name}: {contact.number}
           <button

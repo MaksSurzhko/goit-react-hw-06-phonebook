@@ -1,31 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { nanoid } from "nanoid";
 import pcss from "../components/phonebook/phonebook.module.css";
 import ContactForm from "../components/contform/form";
 import Filter from "../components/filter/filter";
 import ContactList from "../components/contlist/list";
-import { addContact, deleteContact, setFilter } from "../components/redux/phonebookSlice";
+import { addUser, deleteUser, } from "../components/redux/contactsSlice";
+import { filterUser } from "./redux/filterSlice";
 
 const Phonebook = () => {
-  const contacts = useSelector((state) => state.phonebook);
-  // const contacts = useSelector((state) => state);
+  const contacts = useSelector((state) => state.contacts);
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const storedContacts = JSON.parse(window.localStorage.getItem("contacts"));
-  //   if (storedContacts && storedContacts.length) {
-  //     dispatch(addContact(storedContacts));
-  //   }
-  // }, [dispatch]);
-
-
-  // useEffect(() => {
-  //   if (contacts.length) {
-  //     window.localStorage.setItem("contacts", JSON.stringify(contacts));
-  //   }
-  // }, [contacts]);
 
   const handleAddContact = (name, number) => {
     const errorContact = contacts.find((contact) => contact.name === name);
@@ -35,41 +20,18 @@ const Phonebook = () => {
       return;
     }
 
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    dispatch(addContact(newContact));
+    dispatch(addUser({ name, number }));
   };
 
   const handleDeleteContact = (contactId) => {
-    dispatch(deleteContact(contactId));
+    dispatch(deleteUser(contactId));
   };
+
 
   const handleFilterChange = (event) => {
     const { value } = event.target;
-    dispatch(setFilter(value));
+    dispatch(filterUser(value));
   };
-
-  // useEffect(() => {
-  //   const handleBeforeUnload = () => {
-  //     localStorage.removeItem("contacts");
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, []);
-
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
- 
 
   return (
     <div className={pcss.cont}>
@@ -83,7 +45,8 @@ const Phonebook = () => {
         <Filter filter={filter} onFilterChange={handleFilterChange} />
 
         <ContactList
-          contacts={filteredContacts}
+          contacts={contacts}
+          filter={filter}
           onDeleteContact={handleDeleteContact}
         />
       </div>
