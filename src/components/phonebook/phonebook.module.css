@@ -1,6 +1,6 @@
 .cont{
     padding: 20px;
-    background-color: rgb(243, 234, 221);
+    /* background-color: rgb(243, 234, 221); */
     border-radius: 10px;
     border: 3px solid rgb(201, 106, 18);
 }
@@ -38,6 +38,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     width: 300px;
+    
 }
 
 .pbtn{
@@ -83,6 +84,7 @@
         height: 20px;
         width: 170px;
         transition: 250ms;
+        background-color: rgb(243, 227, 212);
 }
 
 .cinput:hover,

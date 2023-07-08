@@ -29,6 +29,7 @@
     margin-bottom: 20px;
     width: 200px;
     transition: 250ms;
+    background-color: rgb(243, 227, 212);
 }
 
 .pinput:hover,
