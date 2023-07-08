@@ -10,7 +10,7 @@ const ContactForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addUser({ name, number }));
+    dispatch(addUser( name, number ));
     setName("");
     setNumber("");
   };
