@@ -4,12 +4,12 @@ import pcss from "../components/phonebook/phonebook.module.css";
 import ContactForm from "../components/contform/form";
 import Filter from "../components/filter/filter";
 import ContactList from "../components/contlist/list";
-import { addUser, deleteUser, } from "../components/redux/contactsSlice";
+import { addUser, deleteUser, selectFilter, selectContacts } from "../components/redux/contactsSlice";
 import { filterUser } from "./redux/filterSlice";
 
 const Phonebook = () => {
-  const contacts = useSelector((state) => state.contacts);
-  const filter = useSelector((state) => state.filter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const handleAddContact = (name, number) => {
